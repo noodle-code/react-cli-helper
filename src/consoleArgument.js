@@ -1,7 +1,12 @@
 let minimist = require('minimist');
 
-const defaultArgsConfig = {};
-let commandConfigs = [];
+const defaultArgsConfig = {
+  string: [],
+  boolean: [],
+  alias: {},
+  '--': true
+};
+const commandConfigs = [];
 
 const _reduceCommandConfigArray = (accumulator, currentValue) => {
   let newConfig = {...accumulator};
