@@ -1,0 +1,10 @@
+{
+  "name": "react-cli-helper",
+  "version": "1.0.0",
+  "description": "A simple CLI helper for react js projects.",
+  "main": "index.js",
+  "repository": "https://github.com/noodle-code/react-cli-helper",
+  "author": "noodle-code",
+  "license": "MIT",
+  "private": false
+}
