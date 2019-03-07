@@ -3,8 +3,7 @@ let minimist = require('minimist');
 const defaultArgsConfig = {
   string: [],
   boolean: [],
-  alias: {},
-  '--': true
+  alias: {}
 };
 const commandConfigs = [];
 
@@ -24,11 +23,11 @@ const _compileArguments = () =>
 const getArguments = () => {
   const [,, ...args] = process.argv;
 
-  let { _, ...options} = minimist(args, _compileArguments());
+  let { _,  ...options} = minimist(args, _compileArguments());
 
   return {
-    commands: {..._},
-    ...options
+    commands: [..._],
+    options
   };
 };
 
