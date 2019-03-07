@@ -16,7 +16,7 @@ const _reduceCommandConfigArray = (accumulator, currentValue) => {
 const _compileArguments = () =>
   commandConfigs.reduce(_reduceCommandConfigArray, {...defaultArgsConfig});
 
-export const getArguments = () => {
+const getArguments = () => {
   const [,, ...args] = process.argv;
 
   let { _, ...options} = minimist(args, _compileArguments());
@@ -25,4 +25,8 @@ export const getArguments = () => {
     commands: {..._},
     ...options
   };
+};
+
+module.exports = {
+  getArguments
 };
