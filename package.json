@@ -23,5 +23,8 @@
   "homepage": "https://github.com/noodle-code/react-cli-helper#readme",
   "bin": {
     "react-cli-help": "./index.js"
+  },
+  "dependencies": {
+    "minimist": "^1.2.0"
   }
 }
