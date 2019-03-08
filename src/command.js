@@ -17,7 +17,7 @@ const runNextCommand = callback => {
 
   let nextCommand = commands.shift();
 
-  callback(nextCommand, {commands, ...options});
+  callback(nextCommand, {commands, options});
 };
 
 module.exports = { runNextCommand };
