@@ -2,20 +2,26 @@ const path = require('path');
 const fs = require('fs');
 const command = require('./../../command');
 const filesystem = require('./../../utilities/filesystem');
+const constants = require('./../../constants');
 
 const templates = {
   test: path.join(__dirname, '/templates/test.js.stub')
 };
 
+const _composeFullPath = (filename, relativePath = '') =>
+  path.join(constants.packageDir, relativePath, filename);
+
 const _createFile = (filename, template, data = {}) => {
-  filesystem.fileNotExists(filename)
+  let fullPath = _composeFullPath(filename);
+
+  filesystem.fileNotExists(fullPath)
             .then(() => {
               let options = {
                 data,
                 template: templates[template]
               };
 
-              filesystem.createFile(filename, options)
+              filesystem.createFile(fullPath, options)
                         .then(() => {
                           console.log('File successfully created.');
                           return;
