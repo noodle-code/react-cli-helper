@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const command = require('./../../command');
 const filesystem = require('./../../utilities/filesystem');
+const logger = require('./../../utilities/logger');
 const constants = require('./../../constants');
 
 const templates = {
@@ -26,19 +27,10 @@ const _createFile = (filename, template, data = {}) => {
               };
 
               filesystem.createFile(filename, options)
-                        .then(() => {
-                          console.log('File successfully created.');
-                          return;
-                        })
-                        .catch(() => {
-                          console.log('Failed to create file.');
-                          return;
-                        });
+                        .then(() => logger.logAndExit('File successfully created.', 0))
+                        .catch(() => logger.logAndExit('Failed to create file.'));
             })
-            .catch(message => {
-              console.log(message);
-              return;
-            });
+            .catch(message => logger.logAndExit(message));
 };
 
 const _createTest = (arguments, filepath) => {
@@ -53,8 +45,7 @@ const _createTest = (arguments, filepath) => {
 
 const runCreateCommand = (command, nextArguments) => {
   if (nextArguments.commands.length <= 0 || !nextArguments.commands[0]) {
-    console.log('Invalid filename.');
-    return;
+    logger.logAndExit('Invalid filename.');
   }
 
   let fullFilenamePath = _getFileFullPath(nextArguments);
@@ -66,7 +57,7 @@ const runCreateCommand = (command, nextArguments) => {
       _createTest(nextArguments, fullFilenamePath);
       return;
     default:
-      console.log('Unknown command');
+      logger.logAndExit('Unknown command');
       return;
   }
 }
