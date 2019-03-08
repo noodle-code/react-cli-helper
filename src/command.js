@@ -3,7 +3,7 @@ let consoleArguments = require('./consoleArgument');
 let commandArguments = consoleArguments.getArguments();
 
 const runNextCommand = callback => {
-  let {commands, ...options} = commandArguments;
+  let commands = [...commandArguments.commands];
 
   if (commands.length <= 0) {
     console.log('No more commands to run.');
@@ -16,8 +16,9 @@ const runNextCommand = callback => {
   }
 
   let nextCommand = commands.shift();
+  commandArguments.commands = [...commands];
 
-  callback(nextCommand, {commands, options});
+  callback(nextCommand, {commands, options: commandArguments.options});
 };
 
 module.exports = { runNextCommand };
