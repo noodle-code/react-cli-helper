@@ -1,3 +1,4 @@
 module.exports = {
-  string: ['describe', 'savePath']
+  string: ['describe', 'savePath', 'componentName'],
+  boolean: ['stateless']
 };
