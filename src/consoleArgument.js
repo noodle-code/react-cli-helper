@@ -1,11 +1,12 @@
 let minimist = require('minimist');
+let createConfig = require('./commands/create/argument');
 
 const defaultArgsConfig = {
   string: [],
   boolean: [],
   alias: {}
 };
-const commandConfigs = [];
+const commandConfigs = [createConfig];
 
 const _reduceCommandConfigArray = (accumulator, currentValue) => {
   let newConfig = {...accumulator};
