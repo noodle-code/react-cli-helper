@@ -31,4 +31,4 @@ Feel free to give your suggestions or if you want to contribute.
 
 ## License
 
-MIT
+ISC
