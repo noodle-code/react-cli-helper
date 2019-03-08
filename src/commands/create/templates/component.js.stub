@@ -1,0 +1,13 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+class {{ componentName }} extends Component {
+  render () {
+    return ();
+  }
+}
+
+{{componentName}}.propTypes = {};
+{{componentName}}.defaultTypes = {};
+
+export default {{ componentName }};

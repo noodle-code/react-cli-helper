@@ -1,0 +1,10 @@
+import React from 'react';
+
+const {{ componentName }} = () => (
+    // Your component HTML structure.
+);
+
+{{componentName}}.propTypes = {};
+{{componentName}}.defaultTypes = {};
+
+export default {{ componentName }};
