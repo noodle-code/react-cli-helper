@@ -1,12 +1,12 @@
 const commands = require('./commands');
+const logger = require('./utilities/logger');
 
 const execute = (command, nextArguments) => {
   if (commands[command]) {
     const executeCommand = commands[command];
     executeCommand();
   } else {
-    console.log('Unrecognized command.');
-    return;
+    logger.logAndExit('Unrecognized command.');
   }
 };
 

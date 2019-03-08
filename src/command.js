@@ -1,4 +1,5 @@
 let consoleArguments = require('./consoleArgument');
+const logger = require('./utilities/logger');
 
 let commandArguments = consoleArguments.getArguments();
 
@@ -6,13 +7,11 @@ const runNextCommand = callback => {
   let commands = [...commandArguments.commands];
 
   if (commands.length <= 0) {
-    console.log('No more commands to run.');
-    return false;
+    logger.logAndExit('No more commands to run.');
   }
 
   if (!callback || typeof callback !== 'function') {
-    console.log('Invalid callback argument.');
-    return false;
+    logger.logAndExit('Invalid callback argument.');
   }
 
   let nextCommand = commands.shift();
