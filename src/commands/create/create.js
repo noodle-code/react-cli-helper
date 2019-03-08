@@ -33,9 +33,13 @@ const _createFile = (filename, template, data = {}) => {
 
 const _createTest = arguments => {
   let filename = arguments.commands[0];
+  let describe = (arguments.options.describe) ? arguments.options.describe : '';
 
   console.log('Creating test file: ' + filename);
-  _createFile(filename, 'test');
+  let data = {
+    describe
+  };
+  _createFile(filename, 'test', data);
 }
 
 const runCreateCommand = (command, nextArguments) => {
