@@ -3,10 +3,13 @@ const fs = require('fs');
 const command = require('./../../command');
 const filesystem = require('./../../utilities/filesystem');
 const logger = require('./../../utilities/logger');
+const stringLib = require('./../../utilities/string');
 const constants = require('./../../constants');
 
 const templates = {
-  test: path.join(__dirname, '/templates/test.js.stub')
+  test: path.join(__dirname, '/templates/test.js.stub'),
+  component: path.join(__dirname, '/templates/component.js.stub'),
+  componentStateless: path.join(__dirname, '/templates/componentStateless.js.stub'),
 };
 
 const _getFullPath = (filename, relativePath = '') =>
@@ -33,6 +36,18 @@ const _createFile = (filename, template, data = {}) => {
             .catch(message => logger.logAndExit(message));
 };
 
+const _generateComponentName = arguments => {
+  let componentName = '';
+
+  if (!arguments.options.componentName) {
+    let sample = stringLib.ucfirst(arguments.commands[0].split('.')[0]);
+
+    return sample
+  }
+
+  return stringLib.ucfirst(arguments.options.componentName);
+};
+
 const _createTest = (arguments, filepath) => {
   let describe = (arguments.options.describe) ? arguments.options.describe : '';
 
@@ -41,6 +56,20 @@ const _createTest = (arguments, filepath) => {
   };
 
   _createFile(filepath, 'test', data);
+}
+
+const _createComponent = (arguments, filepath) => {
+  let template = 'component';
+
+  if(arguments.options.stateless) {
+    template += 'Stateless';
+  }
+
+  let data = {
+    componentName: _generateComponentName(arguments)
+  };
+
+  _createFile(filepath, template, data);
 }
 
 const runCreateCommand = (command, nextArguments) => {
@@ -55,6 +84,9 @@ const runCreateCommand = (command, nextArguments) => {
   switch (command) {
     case 'test':
       _createTest(nextArguments, fullFilenamePath);
+      return;
+    case 'component':
+      _createComponent(nextArguments, fullFilenamePath);
       return;
     default:
       logger.logAndExit('Unknown command');
