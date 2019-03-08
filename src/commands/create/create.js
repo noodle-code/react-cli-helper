@@ -8,20 +8,24 @@ const templates = {
   test: path.join(__dirname, '/templates/test.js.stub')
 };
 
-const _composeFullPath = (filename, relativePath = '') =>
+const _getFullPath = (filename, relativePath = '') =>
   path.join(constants.packageDir, relativePath, filename);
 
-const _createFile = (filename, template, data = {}) => {
-  let fullPath = _composeFullPath(filename);
+const _getFileFullPath = (arguments) => {
+  let relativePath = arguments.options.savePath || '';
 
-  filesystem.fileNotExists(fullPath)
+  return _getFullPath(arguments.commands[0] || '', relativePath);
+};
+
+const _createFile = (filename, template, data = {}) => {
+  filesystem.fileNotExists(filename)
             .then(() => {
               let options = {
                 data,
                 template: templates[template]
               };
 
-              filesystem.createFile(fullPath, options)
+              filesystem.createFile(filename, options)
                         .then(() => {
                           console.log('File successfully created.');
                           return;
@@ -37,21 +41,29 @@ const _createFile = (filename, template, data = {}) => {
             });
 };
 
-const _createTest = arguments => {
-  let filename = arguments.commands[0];
+const _createTest = (arguments, filepath) => {
   let describe = (arguments.options.describe) ? arguments.options.describe : '';
 
-  console.log('Creating test file: ' + filename);
   let data = {
     describe
   };
-  _createFile(filename, 'test', data);
+
+  _createFile(filepath, 'test', data);
 }
 
 const runCreateCommand = (command, nextArguments) => {
+  if (nextArguments.commands.length <= 0 || !nextArguments.commands[0]) {
+    console.log('Invalid filename.');
+    return;
+  }
+
+  let fullFilenamePath = _getFileFullPath(nextArguments);
+
+  console.log('Creating file:' + nextArguments.commands[0])
+
   switch (command) {
     case 'test':
-      _createTest(nextArguments);
+      _createTest(nextArguments, fullFilenamePath);
       return;
     default:
       console.log('Unknown command');
