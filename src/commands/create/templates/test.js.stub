@@ -1,5 +1,5 @@
 import React from 'react';
 
-describe("Component/Module namepath", () => {
-  it("testcase", () => {});
+describe("{{ describe }}", () => {
+  // Put your test cases here.
 });
